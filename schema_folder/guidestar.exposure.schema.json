@@ -1,0 +1,23 @@
+{
+    "duration" : {
+        "fits_keyword" : "DURATION",
+        "title" : "[s] Total duration of guiding data in file",
+        "description" : "Total duration of guiding data in file in units of seconds.",
+        "type" : "float",
+        "units" : "seconds",
+        "example" : "",
+        "default_value" : "",
+        "special_processing" : "VALUE_REQUIRED",
+        "source" : "Science Data Processing (SDP)",
+        "sw_source" : "",
+        "calculation" : "TFRAME*((NGROUPS*NFRAMES+(NGROUPS-1)*GROUPGAP+DROPFRAMES1*NINTS)) where DROPFRAMES1 is a lookup in the PRD DataModes table.",
+        "destination" : ["GuideStar.duration"],
+        "sql_dtype" : "float",
+        "si" : "Multiple",
+        "mode" : "All",
+        "fits_hdu" : "PRIMARY",
+        "level" : "1b",
+        "section" : "Exposure",
+        "misc" : ""
+    }
+}

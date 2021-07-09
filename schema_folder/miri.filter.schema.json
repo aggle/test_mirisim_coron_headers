@@ -1,0 +1,24 @@
+{
+    "filter" : {
+        "fits_keyword" : "FILTER",
+        "title" : "Name of the filter element used",
+        "description" : "Identifies the MIRI filter element that was used. The imagers only moving part is an 18 position filter wheel. Filter positions are allocated as follows: 10 filters for imaging, 4 filter and diaphragm combinations for the coronagraphy, 1 neutral density filter, 1 ZnS-Ge double prism for the LRS mode, 1 opaque position for darks and 1 for a lens for ground test purposes.",
+        "type" : "string",
+        "enum" : ["F560W", "F770W", "F1000W", "F1065C", "F1130W", "F1140C", "F1280W", "F1500W", "F1550C", "F1800W", "F2100W", "F2300C", "F2550W", "F2550WR", "FLENS", "FND", "P750L", "MULTIPLE", "N/A", "ANY"],
+        "units" : "",
+        "example" : "P750L",
+        "default_value" : "",
+        "special_processing" : "VALUE_REQUIRED",
+        "source" : "Observatory Status File (OSF)",
+        "sw_source" : "METRICS:mirMechanism.filter",
+        "calculation" : "",
+        "destination" : ["ScienceCommon.filter"],
+        "sql_dtype" : "nvarchar(50)",
+        "si" : "MIRI",
+        "mode" : "All",
+        "level" : "1b",
+        "fits_hdu" : "PRIMARY",
+        "section" : "Instrument",
+        "misc" : "Redundant source:PPS:miri_exposure_specification.filter"
+    }
+}

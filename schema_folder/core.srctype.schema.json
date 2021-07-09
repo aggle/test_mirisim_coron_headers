@@ -1,0 +1,19 @@
+{
+"source_type" : {
+  "title" : "Source type used for calibration",
+  "type" : "string",
+  "fits_keyword" : "SRCTYPE",
+  "description" : "The source type determined by and used in calibration processing, based on a combination of user input from the APT and additional source meta data.",
+  "default_value" : "UNKNOWN",
+  "example" : "UNKNOWN",
+  "units" : "",
+  "sw_source" : "",
+  "destination" : ["ScienceCommonExt.srctype"],
+  "sql_dtype" : "nvarchar(8)",
+  "level" : "2b",
+  "si" : "MIRI, NIRCAM, NIRISS, NIRSPEC",
+  "section" : "Target Information",
+  "fits_hdu" : "SCI",
+  "misc" : ""
+  }
+}

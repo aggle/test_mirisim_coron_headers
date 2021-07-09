@@ -1,0 +1,45 @@
+{
+    "primary_type" : {
+        "fits_keyword" : "PATTTYPE",
+        "title" : "Primary dither pattern type",
+        "description" : "NIRSpec MSA dither pattern type.  NONE when NIRSpec is the only instrument in use. When NIRSpec is prime with NIRCam imaging in parallel, possible values follow the syntax #_POINT_WITH_NIRCAM_SIZE<s>, where # is the number of points in the pattern (2 or 3), and <s> is the size of the pattern (1, 2, or 3).",
+        "type" : "string",
+        "enum" : ["NONE", "2-POINT-WITH-NIRCAM-SIZE1", "2-POINT-WITH-NIRCAM-SIZE2", "2-POINT-WITH-NIRCAM-SIZE3", "3-POINT-WITH-NIRCAM-SIZE1", "3-POINT-WITH-NIRCAM-SIZE2", "3-POINT-WITH-NIRCAM-SIZE3"],
+        "units" : "",
+        "example" : "NONE",
+        "default_value" : "NONE",
+        "source" : "Proposal and Planning System (PPS)",
+        "sw_source" : "PPS:dms_dithers_view.pattern_type|pps_to_scsb_translation|",
+        "calculation" : "",
+        "destination" : ["ScienceCommon.patttype"],
+        "sql_dtype" : "nvarchar(31)",
+        "si" : "NIRSPEC",
+        "mode" : "NRS_MSASPEC",
+        "level" : "1b",
+        "fits_hdu" : "PRIMARY",
+        "section" : "Dither",
+        "misc" : ""
+    },
+
+    "primary_points" : {
+        "fits_keyword" : "NOD_TYPE",
+        "title" : "Nod pattern type",
+        "description" : "NIRSpec MSA nod pattern type. Possible values are: None, 3-Point-Nod, 2-Shutter-Slitlet, 3-Shutter-Slitlet, 5-Shutter-Slitlet, 5-Shutter-Slitlet-With-Gap.",
+        "type" : "string",
+        "enum" : ["NONE", "3-POINT-NOD", "2-SHUTTER-SLITLET", "3-SHUTTER-SLITLET", "5-SHUTTER-SLITLET", "5-SHUTTER-SLITLET-WITH-GAP"],
+        "units" : "",
+        "example" : "3-Shutter-Slitlet",
+        "default_value" : "None",
+        "source" : "Proposal and Planning System (PPS)",
+        "sw_source" : "PPS:dms_dithers_view.nod_type|pps_to_scsb_translation|",
+        "calculation" : "",
+        "destination" : ["NirspecScience.nod_type"],
+        "sql_dtype" : "nvarchar(31)",
+        "si" : "NIRSPEC",
+        "mode" : "NRS_MSASPEC",
+        "level" : "1b",
+        "fits_hdu" : "PRIMARY",
+        "section" : "Dither",
+        "misc" : ""
+    }
+}

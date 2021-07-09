@@ -1,0 +1,23 @@
+{
+    "primary_type" : {
+        "fits_keyword" : "PATTTYPE",
+        "title" : "Primary dither pattern type",
+        "description" : "MIRI coronagraphy dither pattern type.",
+        "type" : "string",
+        "enum" : ["NONE", "5-POINT-SMALL-GRID", "9-POINT-SMALL-GRID"],
+        "units" : "",
+        "example" : "5-POINT-SMALL-GRID",
+        "default_value" : "NONE",
+        "source" : "Proposal and Planning System (PPS)",
+        "sw_source" : "PPS:dms_dithers_view.pattern_type|pps_to_scsb_translation|",
+        "calculation" : "",
+        "destination" : ["ScienceCommon.patttype"],
+        "sql_dtype" : "nvarchar(31)",
+        "si" : "MIRI",
+        "mode" : ["MIR_LYOT", "MIR_4QPM"],
+        "level" : "1b",
+        "fits_hdu" : "PRIMARY",
+        "section" : "Dither",
+        "misc" : ""
+    }
+}

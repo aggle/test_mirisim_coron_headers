@@ -1,0 +1,45 @@
+{
+    "pool_name" : {
+        "fits_keyword" : "ASNPOOL",
+        "title" : "Name of the Association Pool",
+        "description" : "The name of the association pool file used as input to the association generator to create the association table that resulted in this product",
+        "type" : "string",
+        "units" : "",
+        "example" : "jw12345_20140626T103556_pool.csv",
+        "default_value" : "",
+        "special_processing" : "OPTIONAL",
+        "source" : "Calibration Software",
+        "sw_source" : "",
+        "calculation" : "",
+        "destination" : ["ScienceCommon.asnpool"],
+        "sql_dtype" : "nvarchar(50)",
+        "si" : "Multiple",
+        "mode" : "All",
+        "level" : "2b",
+        "fits_hdu" : "PRIMARY",
+        "section" : "Association",
+        "misc" : ""
+    },
+
+    "table_name" : {
+        "fits_keyword" : "ASNTABLE",
+        "title" : "Name of the Association Generator Table",
+        "description" : "The name of the association table from which this product was created",
+        "type" : "string",
+        "units" : "",
+        "example" : "jw84500-001_20150820T170446_spectrum_001_asn.json",
+        "default_value" : "",
+        "special_processing" : "OPTIONAL",
+        "source" : "Calibration Software",
+        "sw_source" : "",
+        "calculation" : "",
+        "destination" : ["ScienceCommon.asntable"],
+        "sql_dtype" : "nvarchar(120)",
+        "si" : "Multiple",
+        "mode" : "All",
+        "level" : "2b",
+        "fits_hdu" : "PRIMARY",
+        "section" : "Association",
+        "misc" : ""
+    }
+}

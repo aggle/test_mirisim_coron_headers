@@ -1,0 +1,24 @@
+{
+  "source_type_apt" : {
+  "fits_keyword" : "SRCTYAPT",
+  "title" : "Source type from APT (point/extended)",
+  "description" : "This keyword is a user input value from the APT that advises the Calibration Pipeline software if spectroscopy data should be processed as a point source or an extended source. Possible values are POINT, EXTENDED, and UNKNOWN.",
+  "type" : "string",
+  "units" : "",
+  "example" : "POINT",
+  "default_value" : "UNKNOWN",
+  "special_processing" : "",
+  "source" : "",
+  "sw_source" : "PPS:dms_target_view.extended|convert_extended|",
+  "calculation" : " ",
+  "enum" : ["POINT", "EXTENDED", "UNKNOWN"],
+  "destination" : ["ScienceCommon.srctyapt"],
+  "sql_dtype" : "nvarchar(8)",
+  "si" : "MIRI, NIRCAM, NIRISS, NIRSPEC",
+  "mode" : "",
+  "level" : "1b",
+  "fits_hdu" : "PRIMARY",
+  "section" : "Target Information",
+  "misc" : ""
+  }
+}
