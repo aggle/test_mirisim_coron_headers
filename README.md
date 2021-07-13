@@ -14,7 +14,7 @@ This test is simply to see if an expected keyword is present or not in the MIRIS
 For each header, the test function will print a list of expected keywords that *were* found, and a list of expected keywords that were *not* found.
 
 ### Tests for keywords that must have one value from an enumerated list
-Some of the keywords must have one value out of a small set. For example, `CORONMSK` must take one of the following values: `LYOT, LYOT_2300, 4QPM, 4QPM_1065, 4QPM_1140, 4QPM_1550`. This test checks that each of these kinds of keywords is assigned one of its allowed values. 
+Some of the keywords must have one value out of a small set. For example, `CORONMSK` must take one of the following values: `LYOT, LYOT_2300, 4QPM, 4QPM_1065, 4QPM_1140, 4QPM_1550`. This test checks that each of these kinds of keywords is assigned one of its allowed values. It will print all the keywords that pass the test, and for all the keywords that fail the test, it will print both the bad value and the list of allowed values.
 
 ### Tests for type
-This is a less specific test, which checks only that the *type* of the value assigned to a particular keyword matches what is specified in the JWST keyword dictionary.
+This is a less specific test, which checks only that the *type* of the value assigned to a particular keyword matches what is specified in the JWST keyword dictionary. For the keywords that fail this test, it will print their name, specified type, and assigned value.
