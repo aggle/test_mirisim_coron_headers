@@ -4,6 +4,7 @@ from pathlib import Path
 import pandas as pd
 from astropy.io import fits
 
+
 # helper function for printing in columns
 def print_columns(data, ncols=3):
     if len(data) == 0:
@@ -23,6 +24,7 @@ def print_columns(data, ncols=3):
     for row in data_cols:
         width = ' '*fill
         print(f''.join(f"{i:>{fill}}" for i in row))
+
 
 # Create a test class that gets initialized with a list of data files to test; then the test functions are parameterized using those files
 class TestKwds(object):
@@ -45,6 +47,14 @@ class TestKwds(object):
         # this gets automatically updated when you change active_file
         self.__active_headers = self.load_headers_from_file(self.active_file)
 
+        # this dict converts between the schema names for data types
+        # and the python data types
+        self.miri_coron_dtypes = {'string': str,
+                                  'float': float,
+                                  'int': int,
+                                  'integer': int,
+                                  'boolean': bool}
+
     def miri_coron_kwds(self):
         """
         Load all the expected keywords as a DataFrame for sorting and grouping
@@ -63,15 +73,20 @@ class TestKwds(object):
     def load_headers_from_file(self, file):
         """
         Get a fits file path. Return a dictionary where each key is a header
-        name and the entries are the headers
+        name and the entries are the headers, as pandas Series
         """
         hdrs = {}
         with fits.open(file, 'readonly') as hdulist:
             for i, hdu in enumerate(hdulist):
                 if i == 0:
-                    hdrs['PRIMARY'] = hdu.header.copy()
+                    key = 'PRIMARY'
+                    # hdrs['PRIMARY'] = hdu.header.copy()
                 else:
-                    hdrs[hdu.header['EXTNAME']]= hdu.header.copy()
+                    key = hdu.header['EXTNAME']
+                    # hdrs[hdu.header['EXTNAME']]= hdu.header.copy()
+                hdr = pd.Series(hdu.header)
+                hdr.index.name = 'keyword'
+                hdrs[key] = hdr.copy()
         return hdrs
 
 
@@ -165,11 +180,47 @@ class TestKwds(object):
 
     def test_kwd_type(self, hdu_name):
         # first, get rid of all the enum, list-like values
-        ref_kwds = self.get_ref_kwds_for_header(hdu_name)
-        ref_kwds = ref_kwds[ref_kwds.isna()]
-
+        ref_kwds = self.ref_kwds.query("fits_hdu == @hdu_name").copy()
+        ref_kwds = ref_kwds[ref_kwds['enum'].isna()]
+        if len(ref_kwds) == 0:
+            print("No keywords to test")
+            return
         # group by type
-        gb_type = ref_kwds.groupby('type')
+        gb_ref_type = ref_kwds.groupby('type')
+        # loop over each type. in the loop: 
+        # pull out all the keywords that have each type;
+        # find the keywords that are actually in the header;
+        # make sure each keyword's value has the right type
+        result_dict = {}
+        for key in gb_ref_type.groups.keys():
+            # each key is a data type. each group is all the keywords with that
+            # type. pull out all the keywords for a type.
+            ref_group = gb_ref_type.get_group(key)
+            ref_dtype = self.miri_coron_dtypes[key]
+            # take the keywords and find the ones that are actually used in the
+            # mirisim headers
+            ref_kwds = ref_group['fits_keyword']
+            hdr = self.active_headers[hdu_name]
+            # this pandas series has only the keywords that you want to test
+            hdr_test = hdr.reset_index(name='value').query("keyword in @ref_kwds")
+            # apply the test to see if they are the right type
+            bool_ind = hdr_test.apply(lambda row: isinstance(row['value'], ref_dtype), axis=1)
+            pass_test = hdr_test[bool_ind]
+            fail_test = hdr_test[~bool_ind]
+            result_dict[key] = {'all_kwds': ref_kwds,
+                                'used_kwds': hdr_test,
+                                'pass': pass_test,
+                                'fail': fail_test}
+
+        # print summary information
+        for k, v in result_dict.items():
+            print(f"{len(v['used_kwds'])}/{len(v['all_kwds'])} expected `{k}` keywords used in header")
+            print(f"{len(v['pass'])}/{len(v['used_kwds'])} keywords passed type testing.")
+            print(f"{len(v['fail'])}/{len(v['used_kwds'])} keywords failed type testing.")
+            if len(v['fail']) > 0:
+                print("The following keywords failed:")
+                print(v['fail'])
+            print("")
 
     def test_all_headers(self, func):
         for k in self.active_headers.keys():
