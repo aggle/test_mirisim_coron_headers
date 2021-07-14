@@ -3,7 +3,7 @@
 `schema_folder` contains definitions for all the expected metadata keywords and values in the JWST data. They are available for inspection and/or download from the JWST keyword dictionary here: https://mast.stsci.edu/portal/Mashup/Clients/jwkeywords/. This module and notebook collects all the metadata that is expected to be in the MIRI coronagraphic mode data, and checks it against MIRISim output data. 
 
 ## Usage
-At the top of `test_data-headers.ipynb`, replace `data_files` with a list of the files you want to test. Then run the notebook and look at the output!
+Copy the file `files_to_test-example.txt` to a new file (suggestion: `files_to_test.txt`) and paste a list of the files you want to test into it, one file per line. Make sure this file is passed as the argument to `tmck.read_files` at the top of `test_data-headers.ipynb`. then run the notebook and look at the output!
 
 ## Tests
 Right now the notebook works by printing out information for the user, and it is up to the user to decide if the information is correct or not.

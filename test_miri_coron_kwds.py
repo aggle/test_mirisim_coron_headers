@@ -26,6 +26,21 @@ def print_columns(data, ncols=3):
         print(f''.join(f"{i:>{fill}}" for i in row))
 
 
+def read_files(filename):
+    """
+    Wrapper function for reading in the file that stores the list of files to test
+    """
+    with open("files_to_test.txt", 'r') as f:
+        data_files = f.readlines()
+    # convert to pathlib.Path objects
+    data_files = [Path(i.strip()) for i in data_files]
+    # test for existence 2
+    bad_paths = [i for i in data_files if i.exists()]
+    if not bad_paths:
+        print("Error: the following files were not found")
+        print("\t", "\n\t".join(str(i) for i in bad_paths))
+    return data_files
+
 # Create a test class that gets initialized with a list of data files to test; then the test functions are parameterized using those files
 class TestKwds(object):
 
@@ -121,8 +136,8 @@ class TestKwds(object):
             return
         test_hdr = self.active_headers[hdu_name]
         kwds_exist = ref_kwds.apply(lambda x: x in test_hdr.keys())
-        kwds_present = ref_kwds[kwds_exist[kwds_exist].index]
-        kwds_missing = ref_kwds[kwds_exist[~kwds_exist].index]
+        kwds_present = sorted(ref_kwds[kwds_exist[kwds_exist].index])
+        kwds_missing = sorted(ref_kwds[kwds_exist[~kwds_exist].index])
 
         # summarize results
         print(f"{len(kwds_present)}/{len(kwds_exist)} expected keywords were found.")
@@ -130,7 +145,7 @@ class TestKwds(object):
         print_columns(kwds_present, ncols=4)
         print("")
         print("The following keywords *do not* exist:")
-        print_columns(kwds_present, ncols=4)
+        print_columns(kwds_missing, ncols=4)
 
     def test_all_headers_kwds_exist(self):
         for k in self.active_headers.keys():
@@ -223,6 +238,10 @@ class TestKwds(object):
             print("")
 
     def test_all_headers(self, func):
+        """
+        Since each test case function is written to only work on a single HDU,
+        this is a wrapper that will loop over all the HDUs.
+        """
         for k in self.active_headers.keys():
             print(f"Testing {k}")
             func(k)
